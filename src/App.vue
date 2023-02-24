@@ -1,28 +1,29 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <shop-header></shop-header>
+    <router-view></router-view>
+    <shop-footer></shop-footer>
+
+    <!-- 测试区域 -->
+    <!-- <shop-test></shop-test> -->
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// 引入Header组件
+import ShopHeader from "@/components/ShopHeader/ShopHeader.vue";
+// 引入Footer组件
+import ShopFooter from "@/components/ShopFooter/ShopFooter.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    ShopHeader,
+    ShopFooter,
+  },
+  mounted() {
+    // 向服务器请求三级菜单数据
+    this.$store.dispatch("getCatagoryList");
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
