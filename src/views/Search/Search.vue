@@ -46,9 +46,6 @@
                 <li :class="{active:orderIndex == '2'}" @click="setOrder('2')">
                   <a href="#">价格<span v-show="orderIndex == '2' && orderSequence == 'asc'">⬆</span><span v-show="orderIndex == '2' && orderSequence == 'desc'">⬇</span></a>
                 </li>
-                <!-- <li> ⬆
-                  <a href="#">价格⬇</a>
-                </li> -->
               </ul>
             </div>
           </div>
@@ -57,9 +54,11 @@
               <li class="yui3-u-1-5" v-for="goods in goodsList" :key="goods.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"
+                    <!-- <a href="item.html" target="_blank"
                       ><img :src="goods.defaultImg"
-                    /></a>
+                    /></a> -->
+                    <router-link :to="`/detail/${goods.id}`"><img :src="goods.defaultImg"
+                    /></router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -93,35 +92,8 @@
               </li>
             </ul>
           </div>
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+          <!-- 分页导航组件 -->
+          <pagination :page-info="pageInfo"></pagination>
         </div>
       </div>
     </div>
@@ -134,7 +106,7 @@ import SearchSelector from "./SearchSelector/SearchSelector";
 export default {
   name: "Search",
   components: {
-    SearchSelector,
+    SearchSelector
   },
   data() {
     return {
@@ -144,14 +116,14 @@ export default {
         keyword: this.$route.params.keyword || undefined,
         order: "1:desc",
         pageNo: 1,
-        pageSize: 10,
+        pageSize: 3,
         props: [],
         trademark: undefined,
       }
     };
   },
   computed: {
-    ...mapGetters(["goodsList"]),
+    ...mapGetters(["goodsList", "pageInfo"]),
     // 排序字段
     orderIndex() {
       return this.searchParams.order.split(':')[0]
@@ -164,7 +136,7 @@ export default {
   watch: {
     $route: {
       handler(to, from) {
-        // console.log("@$route", to, from);
+        console.log("@$route", to, from);
         Object.assign(this.searchParams, this.$route.params, this.$route.query)
         this.getData(); 
       },
@@ -238,17 +210,24 @@ export default {
   mounted() {
     this.getData();
     // 监听注册全局事件
+    // 根据品牌信息搜索
     this.$bus.$on("searchTrademark", mark => {
       this.searchParams.trademark = `${mark.tmId}:${mark.tmName}`;
       this.getData();
     });
-
+    // 按照属性信息查询
     this.$bus.$on('searchAttr', (attr, attrOption) => {
       console.log('@Search', attr, attrOption)
       let prop = `${attr.attrId}:${attrOption}:${attr.attrName}`
       if(!this.searchParams.props.includes(prop)) {
         this.searchParams.props.push(prop)
       }
+      this.getData()
+    })
+    // 根据页码查询
+    this.$bus.$on("change-page", pn => {
+      console.log('@changePage', pn)
+      this.searchParams.pageNo = pn
       this.getData()
     })
   },
@@ -498,92 +477,7 @@ export default {
         }
       }
 
-      .page {
-        width: 733px;
-        height: 66px;
-        overflow: hidden;
-        float: right;
-
-        .sui-pagination {
-          margin: 18px 0;
-
-          ul {
-            margin-left: 0;
-            margin-bottom: 0;
-            vertical-align: middle;
-            width: 490px;
-            float: left;
-
-            li {
-              line-height: 18px;
-              display: inline-block;
-
-              a {
-                position: relative;
-                float: left;
-                line-height: 18px;
-                text-decoration: none;
-                background-color: #fff;
-                border: 1px solid #e0e9ee;
-                margin-left: -1px;
-                font-size: 14px;
-                padding: 9px 18px;
-                color: #333;
-              }
-
-              &.active {
-                a {
-                  background-color: #fff;
-                  color: #e1251b;
-                  border-color: #fff;
-                  cursor: default;
-                }
-              }
-
-              &.prev {
-                a {
-                  background-color: #fafafa;
-                }
-              }
-
-              &.disabled {
-                a {
-                  color: #999;
-                  cursor: default;
-                }
-              }
-
-              &.dotted {
-                span {
-                  margin-left: -1px;
-                  position: relative;
-                  float: left;
-                  line-height: 18px;
-                  text-decoration: none;
-                  background-color: #fff;
-                  font-size: 14px;
-                  border: 0;
-                  padding: 9px 18px;
-                  color: #333;
-                }
-              }
-
-              &.next {
-                a {
-                  background-color: #fafafa;
-                }
-              }
-            }
-          }
-
-          div {
-            color: #333;
-            font-size: 14px;
-            float: right;
-            width: 241px;
-          }
-        }
-      }
+      
     }
   }
 }

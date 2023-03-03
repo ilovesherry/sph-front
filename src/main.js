@@ -15,13 +15,15 @@ import 'swiper/css/swiper.css'
 // 引入全局组件
 import TypeNav from '@/components/TypeNav/TypeNav.vue'
 import ShopTest from '@/components/ShopTest/ShopTest'
+import Pagination from '@/components/Pagination/Pagination.vue'
 
 // 注册全局组件
 Vue.component("TypeNav", TypeNav)
 Vue.component("ShopTest", ShopTest)
+Vue.component(Pagination.name, Pagination)
 
 // 引入测试
-import './test/test.js'
+// import './test/test.js'
 
 Vue.config.productionTip = false
 new Vue({

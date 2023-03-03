@@ -6,8 +6,35 @@ import Search from "@/views/Search/Search.vue"
 import Login from "@/views/Login/Login.vue"
 // 引入Register组件
 import Register from "@/views/Register/Register"
+// 引入Detail组件
+import Detail from '@/views/Detail/Detail.vue'
+// 引入成功添加到购物车组件
+import AddCartSuccess from '@/views/AddCartSuccess/AddCartSuccess.vue'
+// 引入购物车组件
+import ShopCart from '@/views/ShopCart/ShopCart.vue'
 
 export default [
+  {
+    path: "/shopcart",
+    component: ShopCart,
+    meta: {
+      showFooter: true
+    }
+  },
+  {
+    path: "/addcartsuccess",
+    component: AddCartSuccess,
+    meta: {
+      showFooter: true
+    }
+  },
+  {
+    path: "/detail/:skuId",
+    component: Detail,
+    meta: {
+      showFooter: true
+    }
+  },
     {
       path: "/home",
       component: Home,

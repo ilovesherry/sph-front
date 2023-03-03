@@ -28,6 +28,9 @@ const getters = {
     },
     attrList(state) {
         return state.searchInfo.attrsList || []
+    },
+    pageInfo(state) {
+        return {pageNo:state.searchInfo.pageNo, pageSize:state.searchInfo.pageSize, totalPages:state.searchInfo.totalPages, total:state.searchInfo.total}
     }
 }
 

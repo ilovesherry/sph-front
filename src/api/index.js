@@ -5,10 +5,54 @@ import mockRequest from './mockAjax'
 const requestCatagoryList = () => request.get('/product/getBaseCategoryList')
 // 请求商品搜索结果数据
 const requestSearchResultList = searchParams => request.post('/list', searchParams)
-
 // 请求banner数据
 const requestBannerList = () => mockRequest.get('/banner')
 // 请求floor数据
 const requestFloorList = () => mockRequest.get('/floor')
+// 请求商品详情数据 
+// url:/api/item/{ skuId } method:get  参数：
+// 1.skuId string 必须 商品ID
+const requestDetail = skuId => request({
+    url: `/item/${skuId}`,
+    method: 'get'
+})
+// 向购物车添加商品
+// method:post url:/api/cart/addToCart/{ skuId }/{ skuNum }
+// skuId：商品ID skuNum：商品增加或减少的数量，负数减少
+const requestAddToCart = (skuId, skuNum) => request({
+    url: `/cart/addToCart/${skuId}/${skuNum}`,
+    method: 'post'
+});
 
-export { requestCatagoryList, requestBannerList, requestFloorList,  requestSearchResultList}
+// 获取购物车列表
+// /api/cart/cartList
+const requestShopCartList = () => request({
+    url: '/cart/cartList',
+    method: 'get'
+});
+
+// 删除购物车商品
+// url: /api/cart/deleteCart/{skuId} method: DELETE
+const requestDeleteItemById = skuId => request({
+    url: `/cart/deleteCart/${skuId}`,
+    method: 'DELETE'
+});
+
+// 修改商品选中状态
+// /api/cart/checkCart/{skuID}/{isChecked} method: GET
+const requestUpdateCheckedStatus = (skuId, isChecked) => request({
+    url: `/cart/checkCart/${skuId}/${isChecked}`,
+    method: 'GET'
+});
+
+export {
+    requestCatagoryList,
+    requestBannerList,
+    requestFloorList,
+    requestSearchResultList,
+    requestDetail,
+    requestAddToCart,
+    requestShopCartList,
+    requestDeleteItemById,
+    requestUpdateCheckedStatus
+}

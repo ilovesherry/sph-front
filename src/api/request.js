@@ -5,6 +5,9 @@ import axios from "axios"
 // 引入nprogress
 import nprogress from "nprogress"
 
+// 引入仓库
+import store from '@/store/index.js'
+
 const req = axios.create({
     baseURL: 'http://gmall-h5-api.atguigu.cn/api',
     timeout: 5000
@@ -13,10 +16,11 @@ const req = axios.create({
 // 请求拦截器
 req.interceptors.request.use(function(config) {
     // 在发送请求前做一些事情
-    // ...
+    // 在请求头中添加userTempId
+    config.headers.userTempId = store.state.detail.userTempId;
     // 在发送请求前开启进度条
-    nprogress.start()
-    return config
+    nprogress.start();
+    return config;
 }, function(error) {
     // 在请求发生错误时做一些事情
     // ...
