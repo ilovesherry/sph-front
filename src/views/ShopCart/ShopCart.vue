@@ -44,7 +44,7 @@
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="javascript:void(0)">删除选中的商品</a>
+        <a href="http://www.baidu.com" @click.prevent="handleDeleteCheckedItems">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
@@ -151,6 +151,14 @@
         } catch(error) {
           console.log(error);
         }
+      },
+      handleDeleteCheckedItems() {
+        console.log('@Shopcart deleteChecked', this.cartInfoList);
+        this.cartInfoList.forEach(cartInfo => {
+          if(cartInfo.isChecked == 1) {
+            this.handleDeleteBySkuId(cartInfo);
+          }
+        });
       }
     },
     mounted() {

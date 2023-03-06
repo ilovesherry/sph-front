@@ -7,14 +7,15 @@
         <div class="container">
           <div class="loginList">
             <p>尚品汇欢迎您！</p>
-            <p>
+            <p v-if="!token">
               <span>请</span>
-              <!-- <a href="###">登录</a> -->
               <router-link to="/login">登录</router-link>
-              <!-- <a href="###" class="register">免费注册</a> -->
-              <router-link to="/register" class="register"
-                >免费注册</router-link
-              >
+              <router-link to="/register" class="register">免费注册</router-link>
+            </p>
+            <p v-else>
+              <span>欢迎</span>
+              <span>{{ userInfo.name }}</span>
+              <a class="register" @click="logout">退出登录</a>
             </p>
           </div>
           <div class="typeList">
@@ -71,6 +72,14 @@ export default {
       keyword: ""
     };
   },
+  computed: {
+    token() {
+      return this.$store.state.user.token;
+    },
+    userInfo() {
+      return this.$store.state.user.userInfo;
+    }
+  },
   methods: {
     goSearch() {
       // 根据“||”运算符，当exp1能被转化为真值时，表达式返回exp1，否则返回exp2
@@ -83,13 +92,21 @@ export default {
     removeKeyword() {
       console.log('@Header', 'removeKeyword')
       this.keyword = ''
+    },
+    // 退出登录
+    logout() {
+      this.$store.state.user.userInfo = {};
+      localStorage.removeItem('userInfo');
+      this.$store.state.user.token = "";
+      localStorage.removeItem('TOKEN');
+      this.$router.push({path: '/login'});
     }
   },
   mounted() {
     this.$bus.$on('resetKeyword', ()=>{
       console.log('resetKeyword')
       this.keyword = ''
-    })
+    });
   }
 };
 </script>

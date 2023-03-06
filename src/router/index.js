@@ -41,5 +41,13 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 import routes from './routes.js'
 
 export default new VueRouter({
-  routes: routes
+  routes: routes,
+  // 滚动行为
+  scrollBehavior(to, from, savedPoint) {
+    // console.log('@scrollBehavior', to, from, savedPoint);
+    return {
+      x: 0,
+      y: 0
+    }
+  }
 })

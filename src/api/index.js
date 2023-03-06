@@ -45,6 +45,31 @@ const requestUpdateCheckedStatus = (skuId, isChecked) => request({
     method: 'GET'
 });
 
+// 获取注册验证码
+// /api/user/passport/sendCode/phone method: GET
+// 参数phone必须携带的参数，表示注册手机号
+const requestAuthCode = phone => request({
+    url: `/user/passport/sendCode/${phone}`,
+    method: 'get'
+});
+
+// 注册用户
+// url: /api/user/passport/register method: post
+const requestRegisterUser = data => request({
+    url: '/user/passport/register',
+    method: 'post',
+    data
+});
+
+// 登录
+// url: /api/user/passport/login method: post
+// 参数 phone password
+const requestLogin = data => request({
+    url: '/user/passport/login',
+    method: 'post',
+    data
+});
+
 export {
     requestCatagoryList,
     requestBannerList,
@@ -54,5 +79,8 @@ export {
     requestAddToCart,
     requestShopCartList,
     requestDeleteItemById,
-    requestUpdateCheckedStatus
+    requestUpdateCheckedStatus,
+    requestAuthCode,
+    requestRegisterUser,
+    requestLogin
 }

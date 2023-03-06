@@ -41,7 +41,10 @@ const actions = {
             promiseAllArray.push(promise);
         });
         return Promise.all(promiseAllArray);
-    }
+    },
+    // deleteAllChecked({state, dispatch}) {
+    //     // 遍历
+    // }
 };
 
 const mutations = {
