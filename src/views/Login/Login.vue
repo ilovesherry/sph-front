@@ -25,12 +25,12 @@
               </div>
               <div class="setting clearFix">
                 <label class="checkbox inline">
-                  <input name="m2" type="checkbox" value="2" checked="">
+                  <input type="checkbox">
                   自动登录
                 </label>
                 <span class="forget">忘记密码？</span>
               </div>
-              <button class="btn" @click="login">登&nbsp;&nbsp;录</button>
+              <button class="btn" @click.stop.prevent="login">登&nbsp;&nbsp;录</button>
             </form>
 
             <div class="call clearFix">
@@ -70,17 +70,21 @@
     name: 'Login',
     data() {
       return {
-        phone: "15378786565",
-        password: "123"
+        phone: "13700000000",
+        password: "111111"
+        // phone: "15378786565",
+        // password: "123"
       }
     },
     methods: {
-      login() {
+      async login() {
         let data = {phone: this.phone, password: this.password};
+        let toPath = this.$route.query.redirect? this.$route.query.redirect: '/home';
+        console.log('to path', toPath);
         try {
-          this.$store.dispatch('login', data);
+          await this.$store.dispatch('login', data);
           // 登录成功后跳转到主页
-          this.$router.push({path:'/home'});
+          this.$router.push({path:toPath});
         } catch(error) {
           alert(error.message);
         }

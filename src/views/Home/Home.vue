@@ -46,6 +46,8 @@ export default {
     this.$store.dispatch("getBannerList");
     // 向服务器请求floor信息，这里floor数据使用mockjs模拟
     this.$store.dispatch("getFloorList");
+    // // 向服务器请求用户信息
+    // this.$store.dispatch("getUserInfo");
   },
 };
 </script>

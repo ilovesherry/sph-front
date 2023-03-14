@@ -33,11 +33,6 @@
       <!--头部第二行 搜索区域-->
       <div class="bottom">
         <h1 class="logoArea">
-          <!-- 点击logo图片跳转到home页面 -->
-          <!-- <a class="logo" title="尚品汇" href="###" target="_blank">
-            <img src="./images/logo.png" alt="" />
-          </a> -->
-          <!-- 使用vue-router进行跳转 -->
           <router-link to="/home">
             <img src="./images/logo.png" alt="" />
           </router-link>
@@ -94,11 +89,9 @@ export default {
       this.keyword = ''
     },
     // 退出登录
-    logout() {
-      this.$store.state.user.userInfo = {};
-      localStorage.removeItem('userInfo');
-      this.$store.state.user.token = "";
-      localStorage.removeItem('TOKEN');
+    async logout() {
+      await this.$store.dispatch('logout');
+      
       this.$router.push({path: '/login'});
     }
   },

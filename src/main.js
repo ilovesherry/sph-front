@@ -22,10 +22,41 @@ Vue.component("TypeNav", TypeNav)
 Vue.component("ShopTest", ShopTest)
 Vue.component(Pagination.name, Pagination)
 
+// 引入api
+import * as API from '@/api';
+Vue.prototype.$API = API;
+
+// 引入element-ui
+// 方法1
+// import Element from 'element-ui';
+// Vue.use(Element);
+// 方法2
+import { Button, MessageBox } from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.component(Button.name, Button);
+Vue.component(MessageBox.name, MessageBox);
+
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$prompt = MessageBox.prompt;
+// Vue.prototype.$message = Message;
+
 // 引入测试
 // import './test/test.js'
+// import request from '@/api/request'
+// 获取地址信息
+// url: /api/user/userAddress/auth/findUserAddressList method: get
+// const requestForAddress = () => request({
+//   url: '/user/userAddress/auth/findUserAddressList',
+//   method: 'get'
+// });
+// let promise = requestForAddress();
+// promise.then(result => {
+//   console.log('@main test', result);
+// });
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 new Vue({
   render: h => h(App),
   // 注册路由

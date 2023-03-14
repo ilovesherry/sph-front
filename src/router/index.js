@@ -40,7 +40,7 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 
 import routes from './routes.js'
 
-export default new VueRouter({
+let router = new VueRouter({
   routes: routes,
   // 滚动行为
   scrollBehavior(to, from, savedPoint) {
@@ -50,4 +50,50 @@ export default new VueRouter({
       y: 0
     }
   }
-})
+});
+
+// 路由守卫
+import store from '@/store';
+
+router.beforeEach(async (to, from, next) => {
+  // 获得token信息
+  let token = store.state.user.token;
+  // 获取用户信息
+  let name = store.state.user.userInfo.name;
+
+  if(token) {
+    if(to.path === '/login' || to.path === '/register') {
+      console.log('你已经登录了，就不要再去登录或者注册页面了')
+      next('/home');
+    } else {
+      if(name) { // 如果已经有用户信息
+        next();
+      } else { // 如果没有用户信息
+        try {
+          // 向服务器发请求获取用户信息
+          await store.dispatch('getUserInfo');
+          next();
+        } catch(error) {
+          console.log('@router', '登录token已过期');
+          // 用户token已过期，需重新登录
+          let promise = store.dispatch('logout');
+          promise.then(() => {
+            router.replace('/login');
+          }).catch(err => {
+            alert(err.message);
+          })
+        }
+      }
+    }
+  } else {
+    let flag = to.meta.requireToken;
+    console.log('requireToken', flag);
+    if(flag) {
+      next({path:'/login', query:{redirect:to.path}});
+    } else {
+      next();
+    }
+  }
+});
+
+export default router;

@@ -17,7 +17,14 @@ const req = axios.create({
 req.interceptors.request.use(function(config) {
     // 在发送请求前做一些事情
     // 在请求头中添加userTempId
-    config.headers.userTempId = store.state.detail.userTempId;
+    if(store.state.detail.userTempId) {
+        config.headers.userTempId = store.state.detail.userTempId;
+    }
+    // 在请求投中添加token
+    // console.log('@token', store.state.user.token);
+    if(store.state.user.token) {
+        config.headers.token = store.state.user.token;
+    }
     // 在发送请求前开启进度条
     nprogress.start();
     return config;

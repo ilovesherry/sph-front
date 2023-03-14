@@ -70,6 +70,56 @@ const requestLogin = data => request({
     data
 });
 
+// 获取用户信息
+// url: /api/user/passport/auth/getUserInfo method: get
+const requestUserInfo = () => request({
+    url: '/user/passport/auth/getUserInfo',
+    method: 'get'
+});
+
+// 退出登录
+// url: /api/user/passport/logout method: get
+const requestLogout = () => request({
+    url: '/user/passport/logout',
+    method: 'get'
+});
+
+// 获取订单信息
+// url: /api/order/auth/trade method: get
+const requestTradeInfo = () => request({
+    url: '/order/auth/trade',
+    method: 'get'
+});
+
+// 提交订单
+// url: /api/order/auth/submitOrder?tradeNo={tradeNo} method: post
+const requestSubmitOrder = (tradeNo, data) => request({
+    url: `/order/auth/submitOrder?tradeNo=${tradeNo}`,
+    method: 'post',
+    data
+});
+
+// 获取支付单信息
+// url: /api/payment/weixin/createNative/{orderId} method: get
+const requestPayInfo = orderId => request({
+    url: `/payment/weixin/createNative/${orderId}`,
+    method: 'get'
+});
+
+// 查询支付订单状态
+// url: /api/payment/weixin/queryPayStatus/{orderId} method: get
+const requestPayStatus = orderId => request({
+    url: `/payment/weixin/queryPayStatus/${orderId}`,
+    method: 'get'
+});
+
+// 获取我的订单列表
+// url: /api/order/auth/{page}/{limit} method: get
+const requestOrderList = (page, limit) => request({
+    url: `/order/auth/${page}/${limit}`,
+    method: 'get'
+});
+
 export {
     requestCatagoryList,
     requestBannerList,
@@ -82,5 +132,12 @@ export {
     requestUpdateCheckedStatus,
     requestAuthCode,
     requestRegisterUser,
-    requestLogin
+    requestLogin,
+    requestUserInfo,
+    requestLogout,
+    requestTradeInfo,
+    requestSubmitOrder,
+    requestPayInfo,
+    requestPayStatus,
+    requestOrderList
 }
