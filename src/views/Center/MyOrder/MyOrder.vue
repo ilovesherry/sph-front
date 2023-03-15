@@ -47,7 +47,7 @@
                 width="8%"
                 class="center"
               >
-                小丽
+                {{ record.consignee }}
               </td>
               <td
                 :rowspan="record.orderDetailList.length"
@@ -56,7 +56,7 @@
                 class="center"
               >
                 <ul class="unstyled">
-                  <li>总金额¥138.00</li>
+                  <li>总金额¥{{ getTotalAmount(record) }}</li>
                   <li>在线支付</li>
                 </ul>
               </td>
@@ -171,6 +171,13 @@ export default {
         alert("没有订单！");
       }
     },
+    getTotalAmount(record) {
+      let sum = 0;
+      record.orderDetailList.forEach(item => {
+        sum += item.splitTotalAmount;
+      });
+      return sum;
+    }
   },
   mounted() {
     // 获取个人订单数据
