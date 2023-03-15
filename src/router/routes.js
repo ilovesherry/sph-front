@@ -30,7 +30,7 @@ export default [
     path: "/center",
     component: () => {
       console.log('import commonent center');
-      import('@/views/Center/Center.vue');
+      return import('@/views/Center/Center.vue');
     },
     meta: {
       showFooter: true,
