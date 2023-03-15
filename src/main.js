@@ -32,7 +32,7 @@ Vue.prototype.$API = API;
 // Vue.use(Element);
 // 方法2
 import { Button, MessageBox } from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/index.css'; //babel中引入插件即可
 Vue.component(Button.name, Button);
 Vue.component(MessageBox.name, MessageBox);
 
