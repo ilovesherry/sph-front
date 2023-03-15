@@ -19,7 +19,8 @@
 export default {
   name: "PaySuccess",
   // 组件内守卫
-  beforeRouterEnter(to, from, next) {
+  beforeRouteEnter(to, from, next) {
+    console.log('paysuccess组件内路由守卫', from);
     // 只有在支付页支付成功后才能跳转到支付成功页面，这里没有校验支付成功
     if (from.path == "/pay") {
       next();
