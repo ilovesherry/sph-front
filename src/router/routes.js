@@ -68,6 +68,15 @@ export default [
   {
     path: "/pay",
     component: Pay,
+    // 路由独享守卫
+    beforeEnter: (to, from, next) => {
+      // 只有从交易页面才能到
+      if(from.path == '/trade') {
+        next();
+      } else {
+        next(false);
+      }
+    },
     meta: {
       showFooter: true,
       requireToken: true
@@ -76,6 +85,13 @@ export default [
   {
     path: "/trade",
     component: Trade,
+    beforeEnter: (to, from, next) => {
+      if(from.path == '/shopcart') {
+        next();
+      } else {
+        next(false);
+      }
+    },
     meta: {
       showFooter: true,
       requireToken: true
