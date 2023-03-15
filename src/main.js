@@ -50,6 +50,9 @@ Vue.use(VueLazyload, {
   loading: loadingImg
 });
 
+// 引入vee-validate插件
+import '@/plugins/validate.js';
+
 // 引入测试
 // import './test/test.js'
 // import request from '@/api/request'
