@@ -42,6 +42,14 @@ Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$prompt = MessageBox.prompt;
 // Vue.prototype.$message = Message;
 
+// 引入加载图片
+import loadingImg from '@/assets/1.jpg';
+// 引入图片懒加载插件vue-lazyload
+import VueLazyload from 'vue-lazyload';
+Vue.use(VueLazyload, {
+  loading: loadingImg
+});
+
 // 引入测试
 // import './test/test.js'
 // import request from '@/api/request'
