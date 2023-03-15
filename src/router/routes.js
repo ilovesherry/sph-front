@@ -1,34 +1,37 @@
 // 引入Home组件
-import Home from "@/views/Home/Home.vue"
+// import Home from "@/views/Home/Home.vue"
 // 引入Serch组件
-import Search from "@/views/Search/Search.vue"
+// import Search from "@/views/Search/Search.vue"
 // 引入Login组件
-import Login from "@/views/Login/Login.vue"
+// import Login from "@/views/Login/Login.vue"
 // 引入Register组件
-import Register from "@/views/Register/Register"
+// import Register from "@/views/Register/Register"
 // 引入Detail组件
-import Detail from '@/views/Detail/Detail.vue'
+// import Detail from '@/views/Detail/Detail.vue'
 // 引入成功添加到购物车组件
-import AddCartSuccess from '@/views/AddCartSuccess/AddCartSuccess.vue'
+// import AddCartSuccess from '@/views/AddCartSuccess/AddCartSuccess.vue'
 // 引入购物车组件
-import ShopCart from '@/views/ShopCart/ShopCart.vue';
+// import ShopCart from '@/views/ShopCart/ShopCart.vue';
 // 引入Trade组件
-import Trade from '@/views/Trade/Trade.vue'
+// import Trade from '@/views/Trade/Trade.vue'
 // 引入支付组件
-import Pay from '@/views/Pay/Pay.vue'
+// import Pay from '@/views/Pay/Pay.vue'
 // 引入支付成功组件
-import PaySuccess from '@/views/PaySuccess/PaySuccess.vue';
+// import PaySuccess from '@/views/PaySuccess/PaySuccess.vue';
 // 引入个人中心组件
-import Center from '@/views/Center/Center.vue';
+// import Center from '@/views/Center/Center.vue';
 // 引入个人订单组件
-import MyOrder from '@/views/Center/MyOrder/MyOrder.vue';
+// import MyOrder from '@/views/Center/MyOrder/MyOrder.vue';
 // 引入团购订单组件
-import GroupOrder from '@/views/Center/GroupOrder/GroupOrder.vue';
+// import GroupOrder from '@/views/Center/GroupOrder/GroupOrder.vue';
 
 export default [
   {
     path: "/center",
-    component: Center,
+    component: () => {
+      console.log('import commonent center');
+      import('@/views/Center/Center.vue');
+    },
     meta: {
       showFooter: true,
       requireToken: true
@@ -36,21 +39,21 @@ export default [
     children: [
       {
         path: '',
-        component: MyOrder,
+        component: () => import('@/views/Center/MyOrder/MyOrder.vue'),
         meta: {
           requireToken: true
         }
       },
       {
         path: 'myorder',
-        component: MyOrder,
+        component: () => import('@/views/Center/MyOrder/MyOrder.vue'),
         meta: {
           requireToken: true
         }
       },
       {
         path: 'grouporder',
-        component: GroupOrder,
+        component: () => import('@/views/Center/GroupOrder/GroupOrder.vue'),
         meta: {
           requireToken: true
         }
@@ -59,7 +62,7 @@ export default [
   },
   {
     path: "/paysuccess",
-    component: PaySuccess,
+    component: () => import('@/views/PaySuccess/PaySuccess.vue'),
     meta: {
       showFooter: true,
       requireToken: true
@@ -67,7 +70,7 @@ export default [
   },
   {
     path: "/pay",
-    component: Pay,
+    component: () => import('@/views/Pay/Pay.vue'),
     // 路由独享守卫
     beforeEnter: (to, from, next) => {
       // 只有从交易页面才能到
@@ -84,7 +87,7 @@ export default [
   },
   {
     path: "/trade",
-    component: Trade,
+    component: () => import('@/views/Trade/Trade.vue'),
     beforeEnter: (to, from, next) => {
       if(from.path == '/shopcart') {
         next();
@@ -99,7 +102,7 @@ export default [
   },
   {
     path: "/shopcart",
-    component: ShopCart,
+    component: () => import('@/views/ShopCart/ShopCart.vue'),
     meta: {
       showFooter: true,
       requireToken: false
@@ -107,7 +110,7 @@ export default [
   },
   {
     path: "/addcartsuccess",
-    component: AddCartSuccess,
+    component: () => import('@/views/AddCartSuccess/AddCartSuccess.vue'),
     meta: {
       showFooter: true,
       requireToken: false
@@ -115,7 +118,7 @@ export default [
   },
   {
     path: "/detail/:skuId",
-    component: Detail,
+    component: () => import('@/views/Detail/Detail.vue'),
     meta: {
       showFooter: true,
       requireToken: false
@@ -123,7 +126,7 @@ export default [
   },
   {
     path: "/home",
-    component: Home,
+    component: () => import('@/views/Home/Home.vue'),
     meta: {
       showFooter: true,
       requireToken: false
@@ -131,7 +134,7 @@ export default [
   },
   {
     path: "/search/:keyword?",
-    component: Search,
+    component: () => import("@/views/Search/Search.vue"),
     meta: {
       showFooter: true,
       requireToken: false
@@ -141,7 +144,7 @@ export default [
   },
   {
     path: "/login",
-    component: Login,
+    component: () => import("@/views/Login/Login.vue"),
     meta: {
       showFooter: false,
       requireToken: false
@@ -149,7 +152,7 @@ export default [
   },
   {
     path: "/register",
-    component: Register,
+    component: () => import("@/views/Register/Register"),
     meta: {
       showFooter: false,
       requireToken: false
